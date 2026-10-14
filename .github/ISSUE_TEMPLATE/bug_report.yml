@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a reproducible problem in AgroEstimate.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Please do not include passwords, Firebase credentials, user email addresses or phone numbers."
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Affected page or feature
+      placeholder: "For example: Seed calculator"
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device type
+      options: [Desktop, Mobile, Tablet]
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or additional context
+      description: Remove personal information before uploading screenshots.
