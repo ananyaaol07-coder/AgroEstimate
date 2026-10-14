@@ -1,0 +1,36 @@
+name: Deploy website to Firebase Hosting
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: firebase-hosting-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run tests
+        run: node --test tests/*.test.mjs
+      - name: Prepare website files
+        run: node scripts/build-hosting.mjs
+      - name: Authenticate to Firebase without a stored key
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: agroestimate
+          workload_identity_provider: projects/124879667703/locations/global/workloadIdentityPools/agroestimate-github/providers/github
+          service_account: github-action-1419229786@agroestimate.iam.gserviceaccount.com
+      - name: Deploy live website
+        run: npx --yes firebase-tools@15.33.0 deploy --only hosting --project agroestimate --non-interactive

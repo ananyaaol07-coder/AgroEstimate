@@ -103,3 +103,24 @@ The function checks a verified admin token and the existing `admins/{uid}` marke
 ### Automatic email request approval
 
 Deploy `functions:approveEmailChange` on Blaze in addition to the rules. Approve updates Firebase Authentication, resets email verification, updates the profile, completes the request and creates an in-app `userNotifications/{uid}` notification. No email/SMS notification delivery service is configured. UID remains an internal identifier and is not displayed on email request cards. Processing requests are locked against client changes; retry approval repairs an Auth-only partial success. Users verify the new email through the existing login verification flow. Function deployment was blocked by the project's non-Blaze plan on 12 October 2026.
+
+
+## Automatic GitHub deployment
+
+The workflow `.github/workflows/firebase-hosting-merge.yml` deploys Hosting after
+pushes to `main`, or a manual workflow dispatch. It runs the tests and rebuilds
+`public/` from root HTML/CSS/JS plus `assets/`, `templates/`, `vendor/` and
+`hosting-static/404.html`. Edit those source files; CI prepares `public/` for you.
+Firestore rules, indexes and Cloud Functions remain separate deployments.
+
+The workflow uses a configured Google Cloud Workload Identity provider and a
+matching `roles/iam.workloadIdentityUser` binding on the Hosting deployment
+service account. Authentication uses short-lived GitHub identity credentials
+instead of an exported service-account key.
+
+Manual build and deployment remain available:
+
+```sh
+node scripts/build-hosting.mjs
+npx --yes firebase-tools@15.33.0 deploy --only hosting --project agroestimate
+```
