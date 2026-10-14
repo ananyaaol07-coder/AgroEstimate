@@ -1,0 +1,27 @@
+/* One shared logo position, with room for navigation on its left. */
+:root { --header-inset:max(64px,clamp(22px,6vw,180px)); }
+.landing-nav { padding-left:calc(var(--header-inset) - clamp(22px,6vw,180px)); }
+body .page-header, body[data-protected] .page-header { padding:0 var(--header-inset); }
+body .page-header nav.container,
+body[data-protected] .page-header nav.container:has(.menu-toggle) {
+  position:relative;
+  width:100%; max-width:none;
+  margin:0;
+  padding:clamp(22px,3vh,44px) 0;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px; flex-wrap:wrap;
+}
+body .page-header .brand { order:0; margin-right:auto; }
+body .page-header .brand-logo { width:228px; }
+body .page-header nav.container .menu-toggle {
+  position:absolute; left:-56px; top:calc(clamp(22px,3vh,44px) + 16px);
+  width:44px; height:44px; padding:10px;
+  margin:0; order:0;
+}
+@media(max-width:600px) {
+  .landing-nav, body .page-header nav.container,
+  body[data-protected] .page-header nav.container:has(.menu-toggle) { padding-top:21px; padding-bottom:21px; }
+  body .page-header .brand-logo { width:180px; }
+  body .page-header nav.container .menu-toggle { top:29px; }
+  body .page-header, body[data-protected] .page-header { padding-right:22px; }
+}

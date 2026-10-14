@@ -1,0 +1,10 @@
+const {initializeApp} = require('firebase-admin/app');
+const {getAuth} = require('firebase-admin/auth');
+const {getFirestore} = require('firebase-admin/firestore');
+const {onCall, HttpsError} = require('firebase-functions/v2/https');
+const {makeUpdateUser} = require('./admin-user');
+initializeApp();
+exports.adminUpdateUser = onCall({region: 'us-central1', maxInstances: 5}, makeUpdateUser({auth: getAuth(), db: getFirestore(), HttpsError}));
+const {FieldValue} = require('firebase-admin/firestore');
+const {makeApproveEmail} = require('./approve-email');
+exports.approveEmailChange = onCall({region:'us-central1',maxInstances:5},makeApproveEmail({auth:getAuth(),db:getFirestore(),HttpsError,serverTimestamp:()=>FieldValue.serverTimestamp()}));

@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+const require = createRequire(import.meta.url);
+const {makeUpdateUser} = require('../functions/admin-user.js');
+class HttpsError extends Error {constructor(code,message){super(message);this.code=code;}}
+let administrator=true, targetAdmin=false, failWrite=false, duplicate=false, writes=0, authWrites=0;
+let account={email:'old@example.com',emailVerified:true}, profile={name:'Old',email:account.email,phone:'9876543210'};
+const db={doc:path=>({get:async()=>({exists:path==='admins/admin'?administrator:path.startsWith('admins/')?targetAdmin:true}),update:async patch=>{if(failWrite)throw Error('offline');writes++;Object.assign(profile,patch);}})};
+const auth={getUser:async()=>account,updateUser:async(uid,patch)=>{if(duplicate)throw {code:'auth/email-already-exists'};authWrites++;Object.assign(account,patch);}};
+const update=makeUpdateUser({auth,db,HttpsError});
+const data={uid:'member',name:'New name',email:'new@example.com',phone:'6123456789'};
+const request={auth:{uid:'admin',token:{email_verified:true}},data};
+await assert.rejects(update({data}),{code:'permission-denied'});
+await assert.rejects(update({...request,auth:{uid:'admin',token:{email_verified:false}}}),{code:'permission-denied'});
+administrator=false;await assert.rejects(update(request),{code:'permission-denied'});administrator=true;
+for(const phone of ['5123456789','123','91234567890','98765abcde',''])await assert.rejects(update({...request,data:{...data,phone}}),{code:'invalid-argument'});
+await assert.rejects(update({...request,data:{...data,uid:'bad/path'}}),{code:'invalid-argument'});
+assert.equal(authWrites,0);assert.equal(writes,0);
+targetAdmin=true;await assert.rejects(update(request),{code:'failed-precondition'});targetAdmin=false;
+duplicate=true;await assert.rejects(update(request),{code:'already-exists'});duplicate=false;assert.equal(writes,0);
+failWrite=true;await assert.rejects(update(request),{code:'unavailable'});
+assert.equal(account.email,data.email);assert.equal(account.emailVerified,false);assert.equal(profile.email,'old@example.com');
+failWrite=false;await update(request);assert.equal(profile.email,data.email);assert.equal(profile.phone,data.phone);assert.equal(account.emailVerified,false);
+console.log('Admin editor: authorization, validation, duplicate email, protected admin alias, verification reset and partial-write retry passed.');

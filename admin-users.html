@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AgroEstimate administrator dashboard.">
+  <title>Registered users | AgroEstimate</title>
+  <link rel="stylesheet" href="style.css?v=verification-popup-3">
+<link rel="stylesheet" href="interior.css?v=43">
+<link rel="stylesheet" href="i18n.css?v=arrow-2">
+<script type="module" src="i18n.js?v=email-verification-1"></script>
+
+<script src="online-only.js?v=1" defer></script>
+<link rel="stylesheet" href="page-motion.css?v=3">
+<link rel="stylesheet" href="site-footer.css?v=2">
+<link rel="stylesheet" href="header-layout.css?v=1">
+<link rel="stylesheet" href="email-verification.css?v=3">
+<link rel="stylesheet" href="admin-users.css?v=3">
+</head>
+<body data-protected="admin">
+  <p id="access-status" role="status">Checking your account…</p>
+  <header class="page-header">
+    <nav class="container">
+      <a class="brand" href="index.html" aria-label="AgroEstimate home"><img class="brand-logo" src="assets/agroestimate-logo-white-green.png" alt="AgroEstimate" width="2173" height="724"></a>
+      <button class="nav-link button-link" type="button" id="logout-button">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container dashboard-page">
+    <section class="dashboard-heading"><p class="eyebrow">Administrator area</p><h1>Registered users</h1><p><a class="admin-dashboard-link" href="admin.html">← Back to dashboard</a></p></section>
+    <section class="card" id="registered-users-section">
+      <div class="dashboard-summary">
+        <div><h2>Registered users</h2><p>Firebase member profiles</p></div>
+        <strong id="user-count">0</strong>
+      </div>
+      <form id="user-filters" class="user-filters" aria-label="Filter registered users">
+        <label class="user-search">Search users<input type="search" name="search" placeholder="Name, email or phone number"></label>
+        <label>Registered from<input type="date" name="from"></label>
+        <label>Registered until<input type="date" name="to"></label>
+        <label>Sort by<select name="sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="name">Name A–Z</option></select></label>
+        <button type="reset" class="nav-link button-link">Clear filters</button>
+      </form>
+      <p id="user-filter-status" role="status"></p>
+      <div class="user-list" id="user-list"></div>
+      <p id="user-list-status" role="status"></p>
+    </section>
+  </main>
+  <dialog id="edit-user-dialog" aria-labelledby="edit-user-heading">
+    <h2 id="edit-user-heading">Edit user details</h2>
+    <form id="edit-user-form">
+      <label>Full name<input name="name" required maxlength="200"></label>
+      <label>Email address<input name="email" type="email" readonly required maxlength="254"></label>
+      <label>Phone number<input name="phone" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" required title="Enter exactly 10 digits starting with 6, 7, 8, or 9."></label>
+      <p id="email-edit-help">Email editing is unavailable until the Firebase email-editing function is deployed. You can still save name and phone changes.</p>
+      <p>Passwords are private and cannot be viewed.</p>
+      <div class="member-edit-actions"><button type="submit" class="primary-button">Save changes</button><button type="button" class="nav-link button-link" id="cancel-edit-user">Cancel</button></div>
+      <p id="edit-user-status" role="status"></p>
+    </form>
+  </dialog>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-about">
+        <a href="index.html" class="footer-brand">AgroEstimate</a>
+        <p>Simple tools for better farm planning. Estimate fertilizer costs, seed requirements, spacing and crop yield in English or Marathi.</p>
+      </div>
+      <div class="footer-links">
+        <h2>Explore</h2>
+        <a href="fertilizer.html">Fertilizer &amp; cost</a>
+        <a href="seed.html">Seed rate &amp; spacing</a>
+        <a href="yield.html">Yield estimation</a>
+      </div>
+      <div class="footer-contact">
+        <h2>Contact us</h2>
+        <address><a href="mailto:ananyaaol07@gmail.com">ananyaaol07@gmail.com</a><a href="tel:+918446438711">+91 8446438711</a><span>Shirpur</span></address>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>AgroEstimate</span><span>A clearer plan for every acre.</span></div>
+  </footer>
+  <script src="sidebar.js?v=phone-requests-1"></script>
+<script type="module" src="auth.js?v=phone-history-2"></script>
+<script src="interior.js?v=5" defer></script>
+</body>
+</html>

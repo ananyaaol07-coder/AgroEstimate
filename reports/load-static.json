@@ -1,0 +1,125 @@
+{
+  "mode": "static",
+  "startedAt": "2026-10-14T08:06:24.127Z",
+  "stages": [
+    {
+      "concurrency": 10,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 3.54,
+      "journeysPerSecond": 28.27,
+      "p50ms": 335,
+      "p95ms": 449,
+      "maxMs": 560,
+      "errors": []
+    },
+    {
+      "concurrency": 25,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 3.31,
+      "journeysPerSecond": 30.21,
+      "p50ms": 787,
+      "p95ms": 1000,
+      "maxMs": 1191,
+      "errors": []
+    },
+    {
+      "concurrency": 50,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 4.04,
+      "journeysPerSecond": 24.77,
+      "p50ms": 1339,
+      "p95ms": 3269,
+      "maxMs": 4037,
+      "errors": []
+    },
+    {
+      "concurrency": 100,
+      "attempts": 100,
+      "passed": 72,
+      "failed": 28,
+      "seconds": 7.78,
+      "journeysPerSecond": 12.85,
+      "p50ms": 1753,
+      "p95ms": 7782,
+      "maxMs": 7782,
+      "errors": [
+        "fetch failed (ETIMEDOUT)"
+      ]
+    }
+  ],
+  "bundles": [
+    {
+      "page": "index.html",
+      "urls": [
+        "style.css?v=verification-popup-3",
+        "landing.css?v=farmer-gallery-6",
+        "i18n.css?v=arrow-2",
+        "i18n.js?v=email-verification-1",
+        "online-only.js?v=1",
+        "page-motion.css?v=3",
+        "site-footer.css?v=2",
+        "header-layout.css?v=1",
+        "email-verification.css?v=3",
+        "assets/farmland-hero.png",
+        "assets/agroestimate-logo-white-green.png",
+        "assets/farmers/20317197.jpg",
+        "assets/farmers/29912210.jpg",
+        "assets/farmers/31983759.jpg",
+        "assets/farmers/29039798.jpg",
+        "assets/farmers/20841298.jpg",
+        "assets/farmers/20344348.jpg",
+        "assets/farmers/20445209.jpg",
+        "assets/farmers/16663119.jpg",
+        "farmer-gallery.js?v=3",
+        "auth.js?v=phone-history-2"
+      ]
+    },
+    {
+      "page": "register.html",
+      "urls": [
+        "style.css?v=verification-popup-3",
+        "interior.css?v=34",
+        "i18n.css?v=arrow-2",
+        "i18n.js?v=email-verification-1",
+        "online-only.js?v=1",
+        "page-motion.css?v=3",
+        "site-footer.css?v=2",
+        "auth-background.css?v=1",
+        "header-layout.css?v=1",
+        "email-verification.css?v=3",
+        "assets/agroestimate-logo-white-green.png",
+        "login-environment.js",
+        "auth.js?v=phone-history-2",
+        "interior.js?v=4",
+        "assets/farmland-hero.png"
+      ]
+    },
+    {
+      "page": "login.html",
+      "urls": [
+        "style.css?v=verification-popup-3",
+        "interior.css?v=34",
+        "i18n.css?v=arrow-2",
+        "login-motion.css?v=4",
+        "i18n.js?v=email-verification-1",
+        "online-only.js?v=1",
+        "page-motion.css?v=3",
+        "auth-background.css?v=1",
+        "header-layout.css?v=1",
+        "email-verification.css?v=3",
+        "assets/agroestimate-logo-white-green.png",
+        "login-environment.js",
+        "auth.js?v=phone-history-2",
+        "interior.js?v=4",
+        "assets/farmland-hero.png"
+      ]
+    }
+  ],
+  "finishedAt": "2026-10-14T08:06:42.799Z"
+}

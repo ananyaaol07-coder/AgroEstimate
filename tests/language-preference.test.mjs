@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {preferredLanguage,languageUrl} from '../language-preference.js';
+const blocked={getItem(){throw new Error('blocked');}};
+assert.equal(preferredLanguage({search:'?lang=mr'},blocked),'mr');
+assert.equal(preferredLanguage({search:''},{getItem:()=> 'mr'}),'mr');
+assert.equal(preferredLanguage({search:'?lang=en'},{getItem:()=> 'mr'}),'en');
+assert.equal(preferredLanguage({search:''},blocked),'en');
+assert.equal(languageUrl('login.html?next=seed.html','http://localhost:8000/index.html','mr'),'http://localhost:8000/login.html?next=seed.html&lang=mr');
+assert.equal(languageUrl('admin.html','http://localhost:8000/login.html?lang=mr','mr'),'http://localhost:8000/admin.html?lang=mr');
+assert.equal(languageUrl('https://example.com/help.html','http://localhost:8000/','mr'),'https://example.com/help.html');

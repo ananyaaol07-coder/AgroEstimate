@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {distinctCalculations,distinctLegacy} from '../history-distinct.js';
+const original={kind:'seed',crop:'Rice',season:'Kharif',condition:'Irrigated',unit:'hectare',area:1,areaHa:1,output:20,resultText:'Rice 20 kg',date:'2026-10-01'};
+const newer={...original,id:'new',date:'2026-10-07'};
+assert.deepEqual(distinctCalculations([original,newer]),[newer]);
+for(const changes of [{season:'Rabi'},{condition:'Rainfed'},{area:2},{output:30},{kind:'yield'},{resultText:'Rice 20 kg, spacing 30 cm'}])assert.equal(distinctCalculations([original,{...original,...changes}]).length,2);
+assert.equal(distinctCalculations([original,{...newer,crop:' rice ',resultText:'Rice   २० kg'}]).length,1);
+assert.equal(distinctLegacy([{text:'Rice 20 kg',date:'2026-10-01'}],[original]).length,0);
+assert.deepEqual(distinctLegacy([{text:'old result',date:'2026-10-01'},{text:'old result',date:'2026-10-07'}]),[{text:'old result',date:'2026-10-07'}]);
+assert.equal(original.date,'2026-10-01');
+const early={kind:'seed',crop:'Rice',areaHa:1,output:20,date:'2026-09-01'};
+assert.deepEqual(distinctCalculations([early,newer]),[newer]);
+assert.deepEqual(distinctCalculations([early]),[early]);
+assert.equal(distinctCalculations([early,newer,{...newer,season:'Rabi'}]).length,3);
+assert.equal(distinctCalculations([{...early,season:'Rabi'},newer]).length,2);

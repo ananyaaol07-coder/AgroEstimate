@@ -1,0 +1,161 @@
+rules_version = '2';
+
+// AgroEstimate Firestore rules.
+// admins/{uid}: administrator marker; no client writes.
+// users/{uid}: private member profile with name, email, optional phone and createdAt.
+// calculatorData/{calculator}: uploaded calculator rows and upload metadata.
+// emailChangeRequests/{uid}: private email-change request and workflow status.
+// calculationEvents/{event}: immutable, user-owned calculation history.
+// phoneChangeRequests/{requestId}: member requests with admin approval.
+// registrationDetails/{uid}: private registration phone before verification.
+// userNotifications/{uid}: server-created notifications.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null && request.auth.token.email_verified == true; }
+    function admin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function validName(value) {
+      return value is string && value.size() > 0 && value.size() <= 200;
+    }
+    function validPhone(value) {
+      return value is string && value.matches('^[6-9][0-9]{9}$');
+    }
+    function phoneApprovalApplied(data) {
+      return get(/databases/$(database)/documents/users/$(data.uid)).data.get('phone', '') == data.currentPhone
+        && getAfter(/databases/$(database)/documents/users/$(data.uid)).data.phone == data.newPhone;
+    }
+    match /admins/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow list, write: if false;
+    }
+    match /calculatorData/{calculator} {
+      allow read: if calculator in ['fertilizer', 'seed', 'yield'] && signedIn();
+      allow create, update: if calculator in ['fertilizer', 'seed', 'yield'] && admin()
+        && request.resource.data.keys().hasOnly(['rows', 'sourceName', 'schemaVersion', 'updatedBy', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['rows', 'sourceName', 'schemaVersion', 'updatedBy', 'updatedAt'])
+        && request.resource.data.schemaVersion is int
+        && request.resource.data.schemaVersion == 1
+        && request.resource.data.rows is list
+        && request.resource.data.rows.size() > 0
+        && request.resource.data.rows.size() <= 200
+        && request.resource.data.sourceName is string
+        && request.resource.data.sourceName.size() > 0
+        && request.resource.data.sourceName.size() <= 1024
+        && request.resource.data.updatedBy == request.auth.uid
+        && request.resource.data.updatedAt == request.time;
+      allow delete: if false;
+    }
+    function validCalculationEvent(data) {
+      return data.keys().hasOnly(['uid','kind','crop','season','condition','unit','area','areaHa','output','resultText','createdAt'])
+        && data.keys().hasAll(['uid','kind','crop','season','condition','unit','area','areaHa','output','resultText','createdAt'])
+        && data.uid == request.auth.uid
+        && data.kind in ['fertilizer','seed','yield']
+        && data.crop is string && data.crop.size() > 0 && data.crop.size() <= 100
+        && data.season is string && data.season.size() > 0 && data.season.size() <= 100
+        && data.condition is string && data.condition.size() > 0 && data.condition.size() <= 100
+        && data.unit in ['hectare','acre','guntha','are']
+        && data.area is number && data.area > 0 && data.area <= 1000000000
+        && data.areaHa is number && data.areaHa > 0 && data.areaHa <= 1000000000
+        && data.output is number && data.output >= 0 && data.output <= 1000000000000000
+        && data.resultText is string && data.resultText.size() <= 5000
+        && data.createdAt == request.time;
+    }
+    match /calculationEvents/{event} {
+      allow read: if admin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create: if signedIn() && validCalculationEvent(request.resource.data);
+      allow update: if false;
+      allow delete: if admin() && resource.data.createdAt < request.time - duration.value(366,'d');
+    }
+    match /emailChangeRequests/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || admin());
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && (!exists(/databases/$(database)/documents/emailChangeRequests/$(uid)) || resource.data.status != 'processing')
+        && request.resource.data.keys().hasOnly(['uid','name','currentEmail','newEmail','reason','details','status','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','name','currentEmail','newEmail','reason','details','status','createdAt'])
+        && request.resource.data.uid == uid
+        && validName(request.resource.data.name)
+        && request.resource.data.name == get(/databases/$(database)/documents/users/$(uid)).data.name
+        && request.resource.data.currentEmail == request.auth.token.email
+        && request.resource.data.newEmail is string && request.resource.data.newEmail.size() <= 254
+        && request.resource.data.newEmail.matches('^[^ @]+@[^ @]+[.][^ @]+$')
+        && request.resource.data.newEmail != request.auth.token.email
+        && request.resource.data.reason in ['Lost access to my email','Incorrect email address','Switching to a new email','Other']
+        && request.resource.data.details is string && request.resource.data.details.size() <= 1000
+        && (request.resource.data.reason != 'Other' || request.resource.data.details.size() >= 10)
+        && request.resource.data.status == 'pending' && request.resource.data.createdAt == request.time;
+      allow update: if admin() && resource.data.status == 'pending'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status == 'rejected';
+      allow delete: if admin() && resource.data.status != 'processing';
+    }
+    match /userNotifications/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read'])
+        && request.resource.data.read == true;
+      allow list, create, delete: if false;
+    }
+    match /phoneChangeRequests/{requestId} {
+      allow read: if signedIn() && (request.auth.uid == resource.data.uid || admin());
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['uid','name','currentPhone','newPhone','reason','details','status','createdAt'])
+        && request.resource.data.keys().hasAll(['uid','name','currentPhone','newPhone','reason','details','status','createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && validName(request.resource.data.name)
+        && request.resource.data.currentPhone is string
+        && request.resource.data.name == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.name
+        && request.resource.data.currentPhone == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('phone', '')
+        && request.resource.data.newPhone is string
+        && request.resource.data.newPhone.matches('^[6-9][0-9]{9}$')
+        && request.resource.data.newPhone != request.resource.data.currentPhone
+        && request.resource.data.reason in ['Lost access to my phone number','Incorrect phone number','Switching to a new phone number','Other']
+        && request.resource.data.details is string && request.resource.data.details.size() <= 1000
+        && (request.resource.data.reason != 'Other' || request.resource.data.details.size() >= 10)
+        && request.resource.data.status == 'pending' && request.resource.data.createdAt == request.time;
+      allow update: if admin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && resource.data.status == 'pending'
+        && (request.resource.data.status == 'rejected'
+          || (request.resource.data.status == 'completed' && phoneApprovalApplied(resource.data)));
+      allow delete: if admin();
+    }
+    // Registration contact data is private even before email verification.
+    // A supplied number is contact information, not proof of phone ownership.
+    match /registrationDetails/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['phone'])
+        && request.resource.data.phone is string
+        && request.resource.data.phone.matches('^[6-9][0-9]{9}$');
+      allow list, update, delete: if false;
+    }
+    match /users/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || admin());
+      allow list: if admin();
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name', 'email', 'phone', 'createdAt'])
+        && request.resource.data.keys().hasAll(['name', 'email', 'createdAt'])
+        && (!('phone' in request.resource.data) || (request.resource.data.phone is string
+          && request.resource.data.phone.matches('^[6-9][0-9]{9}$')))
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 200
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.createdAt == request.time;
+      allow update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['email'])
+        && request.resource.data.email is string
+        && request.resource.data.email == request.auth.token.email;
+      allow update: if admin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'phone'])
+        && validName(request.resource.data.name)
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['phone'])
+          || validPhone(request.resource.data.phone));
+      allow delete: if false;
+    }
+    // Deny access to all other documents and subcollections.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const source=fs.readFileSync(new URL('../auth.js',import.meta.url),'utf8');
+const saved=[];
+const context=vm.createContext({navigator:{onLine:true},window:{agriAuthenticated:true},auth:{currentUser:{uid:'member'}},db:{},api:{doc:()=>({}),collection:()=>({}),getDocFromServer:async()=>({exists:()=>true,data:()=>({name:'Farmer',phone:'9123456789'})}),serverTimestamp:()=>123,addDoc:async(ref,data)=>saved.push({id:String(saved.length),...data})}});
+vm.runInContext(source.slice(source.indexOf('window.requestAgroPhoneChange =')),context);
+for(const newPhone of ['6123456789','7123456789'])await context.window.requestAgroPhoneChange({newPhone,reason:'Switching to a new phone number',details:''});
+assert.equal(saved.length,2);assert.notEqual(saved[0].id,saved[1].id);assert.equal(saved[0].newPhone,'6123456789');assert.equal(saved[1].newPhone,'7123456789');
+console.log('Repeated phone-change requests retain separate records for the same member.');

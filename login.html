@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to AgroEstimate.">
+  <title>Login | AgroEstimate</title>
+  <link rel="stylesheet" href="style.css?v=verification-popup-3">
+<link rel="stylesheet" href="interior.css?v=34">
+<link rel="stylesheet" href="i18n.css?v=arrow-2">
+<link rel="stylesheet" href="login-motion.css?v=4">
+<script type="module" src="i18n.js?v=email-verification-1"></script>
+
+<script src="online-only.js?v=1" defer></script>
+<link rel="stylesheet" href="page-motion.css?v=3">
+<link rel="stylesheet" href="auth-background.css?v=1">
+<link rel="stylesheet" href="header-layout.css?v=1">
+<link rel="stylesheet" href="email-verification.css?v=3">
+</head>
+<body>
+  <header class="page-header">
+    <nav class="container">
+      <a class="brand" href="index.html" aria-label="AgroEstimate home"><img class="brand-logo" src="assets/agroestimate-logo-white-green.png" alt="AgroEstimate" width="2173" height="724"></a>
+      <a class="nav-link" href="index.html">Back</a>
+    </nav>
+  </header>
+
+  <main class="auth-page login-layout container">
+    <aside class="login-welcome" aria-labelledby="welcome-title">
+      <div class="welcome-content">
+        <p class="welcome-kicker">GROW WITH A PLAN</p>
+        <h2 id="welcome-title">Every great harvest<br>starts here.</h2>
+        <p>Your next season, a little clearer. Bring your farm plans together with AgroEstimate.</p>
+        <div class="welcome-features"><span>01 <strong>Plan your fertilizer</strong></span><span>02 <strong>Find your seed rate</strong></span><span>03 <strong>Estimate your harvest</strong></span></div>
+        <p class="welcome-footnote">From the first seed to the final harvest.</p>
+      </div>
+    </aside>
+    <section class="auth-card">
+      <span class="auth-icon">👋</span>
+      <p class="eyebrow auth-eyebrow">Welcome back</p>
+      <h1>Login to AgroEstimate</h1>
+      <p class="auth-copy">Enter your account details to continue.</p>
+      <div class="login-options"><a class="admin-login-link" href="admin-login.html">Login as admin</a></div>
+      <form id="login-form" class="auth-form">
+        <label>Email address
+          <input id="login-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <label>Password
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+        </label>
+        <button class="primary-button" type="submit">Login</button>
+      </form>
+      <p class="form-message" id="login-message" aria-live="polite"></p>
+      <p class="auth-switch">New to AgroEstimate? <a href="register.html">Create an account</a></p>
+
+    </section>
+  </main>
+  <footer><p>AgroEstimate · Smart calculations for better farming</p></footer>
+  <script src="login-environment.js"></script>
+  <script type="module" src="auth.js?v=phone-history-2"></script>
+<script src="interior.js?v=4" defer></script>
+</body>
+</html>

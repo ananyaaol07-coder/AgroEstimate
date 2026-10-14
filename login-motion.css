@@ -1,0 +1,45 @@
+/* A short, staggered entrance; controls remain usable during the animation. */
+.auth-page { min-height:0; padding-top:24px; padding-bottom:24px; }
+.login-layout { align-content:center; align-items:stretch; }
+body > footer { padding-top:16px; padding-bottom:16px; }
+@media (min-width:901px) and (max-height:950px) {
+  .auth-page { padding-top:8px; padding-bottom:8px; }
+  body > footer { padding-top:10px; padding-bottom:10px; }
+  .auth-card { padding:24px 32px; }
+  .auth-icon { width:44px; height:44px; margin-bottom:10px; }
+  .auth-card h1 { margin:8px 0 10px; }
+  .auth-copy,.login-options { margin-bottom:16px; }
+  .auth-form { gap:12px; }
+}
+@media screen {
+  .page-header,
+  .login-welcome,
+  .auth-card,
+  body > footer {
+    animation: login-arrive .7s cubic-bezier(.22,1,.36,1) both !important;
+  }
+  .login-welcome { animation-delay: .06s !important; }
+  .auth-card { animation-delay: .1s !important; }
+  .welcome-content > *,
+  .auth-card > :not(form):not(.form-message),
+  .auth-form > * {
+    animation: login-arrive .6s cubic-bezier(.22,1,.36,1) both !important;
+    animation-delay: .16s !important;
+  }
+  .welcome-content > :nth-child(2), .auth-card h1 { animation-delay: .2s !important; }
+  .welcome-content > :nth-child(3), .auth-card .auth-copy { animation-delay: .24s !important; }
+  .welcome-features, .login-options { animation-delay: .28s !important; }
+  .auth-form > :nth-child(1) { animation-delay: .3s !important; }
+  .auth-form > :nth-child(2) { animation-delay: .35s !important; }
+  .auth-form > :nth-child(3) { animation-delay: .4s !important; }
+  .auth-card .auth-switch, .welcome-footnote, body > footer { animation-delay: .44s !important; }
+  body > footer { animation-name:login-footer-arrive !important; }
+  @keyframes login-footer-arrive {
+    from { opacity:0; transform:translateY(-8px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  @keyframes login-arrive {
+    from { opacity: 0; transform: translateY(22px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}

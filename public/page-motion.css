@@ -1,0 +1,51 @@
+/* Visual entrances only: no changes to dimensions, spacing or page alignment. */
+body:not(:has(#login-form)) main > :not(script),
+.landing-intro > * {
+  animation:page-arrive .65s cubic-bezier(.22,1,.36,1) backwards !important;
+}
+body:not(:has(#login-form)) main > :nth-child(2) { animation-delay:.1s !important; }
+body:not(:has(#login-form)) main > :nth-child(3) { animation-delay:.18s !important; }
+.landing-intro > :nth-child(2) { animation-delay:.08s !important; }
+.landing-intro > :nth-child(3) { animation-delay:.16s !important; }
+.landing-intro > :nth-child(4) { animation-delay:.24s !important; }
+.landing-intro > :nth-child(5) { animation-delay:.3s !important; }
+body:not(:has(#login-form)) .page-header,
+.landing-nav,
+.site-footer {
+  animation:page-fade .6s ease-out backwards !important;
+}
+/* Animate each choice without overriding its existing hover transform. */
+.choice-grid > * { animation:page-arrive .6s cubic-bezier(.22,1,.36,1) backwards !important; }
+.choice-grid > :nth-child(2) { animation-delay:.12s !important; }
+.choice-grid > :nth-child(3) { animation-delay:.24s !important; }
+.choice-card:hover { transform:none !important; }
+.choice-card .card-link { transition:translate .18s ease,box-shadow .18s ease !important; }
+.choice-card .card-link:hover, .choice-card:focus-visible .card-link {
+  translate:0 -4px;
+  box-shadow:0 7px 16px #09221530;
+}
+.landing-nav .account-links > a,
+.language-picker,
+button:not(.farmer-card):not(:disabled),
+input[type="submit"]:not(:disabled),
+a.primary-button, a.nav-link, a.admin-login-link, a.landing-cta,
+a[role="button"] {
+  transition:translate .18s ease,box-shadow .18s ease,background .18s ease !important;
+}
+.landing-nav .account-links > a:hover,
+.language-picker:hover,
+button:not(.farmer-card):not(:disabled):hover,
+input[type="submit"]:not(:disabled):hover,
+a.primary-button:hover, a.nav-link:hover, a.admin-login-link:hover, a.landing-cta:hover,
+a[role="button"]:hover {
+  translate:0 -4px;
+  box-shadow:0 7px 16px #09221530;
+}
+@keyframes page-arrive {
+  from { opacity:0; translate:0 12px; }
+  to { opacity:1; translate:0 0; }
+}
+@keyframes page-fade {
+  from { opacity:0; }
+  to { opacity:1; }
+}

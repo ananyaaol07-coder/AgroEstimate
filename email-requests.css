@@ -1,0 +1,16 @@
+.email-request-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
+.email-request-summary>div{padding:20px;border-radius:12px;background:#f7f7ef}
+.email-request-summary dt{color:var(--muted);font-size:.9rem}
+.email-request-summary dd{margin:8px 0 0;font-size:2rem;font-weight:700;color:#214c36}
+.email-request-name-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:#f7f7ef;border-radius:12px;padding:20px;margin-top:12px}
+.email-request-name-row strong{overflow-wrap:anywhere;min-width:0}
+.email-request-name-row p:empty{display:none}
+.email-request-name-row p{flex-basis:100%;margin:0}
+@media(max-width:480px){.email-request-summary{gap:8px}.email-request-summary>div{padding:12px}.email-request-summary dt{font-size:.8rem}}
+
+.email-request-name-row{display:block}
+.email-request-name-row summary{cursor:pointer;font-weight:700;overflow-wrap:anywhere}
+.email-request-name-row summary:focus-visible{outline:2px solid #214c36;outline-offset:5px}
+.email-request-details{padding-top:18px;display:grid;gap:14px;overflow-wrap:anywhere}
+.email-request-actions{display:flex;gap:16px;flex-wrap:wrap}
+.email-request-actions button:disabled{opacity:.45;cursor:not-allowed}

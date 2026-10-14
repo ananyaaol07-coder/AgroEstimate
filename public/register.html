@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create an AgroEstimate account.">
+  <title>Register | AgroEstimate</title>
+  <link rel="stylesheet" href="style.css?v=verification-popup-3">
+  <link rel="stylesheet" href="interior.css?v=34">
+  <link rel="stylesheet" href="i18n.css?v=arrow-2">
+  <script type="module" src="i18n.js?v=email-verification-1"></script>
+
+  <script src="online-only.js?v=1" defer></script>
+  <link rel="stylesheet" href="page-motion.css?v=3">
+  <link rel="stylesheet" href="site-footer.css?v=2">
+  <link rel="stylesheet" href="auth-background.css?v=1">
+  <link rel="stylesheet" href="header-layout.css?v=1">
+  <link rel="stylesheet" href="email-verification.css?v=3">
+</head>
+
+<body>
+  <header class="page-header">
+    <nav class="container">
+      <a class="brand" href="index.html" aria-label="AgroEstimate home"><img class="brand-logo"
+          src="assets/agroestimate-logo-white-green.png" alt="AgroEstimate" width="2173" height="724"></a>
+      <a class="nav-link" href="index.html">Back</a>
+    </nav>
+  </header>
+
+  <main class="auth-page container">
+    <section class="auth-card">
+      <span class="auth-icon">🌱</span>
+      <p class="eyebrow auth-eyebrow">Create your account</p>
+      <h1>Join AgroEstimate</h1>
+      <p class="auth-copy">Save your profile and use the farming calculators.</p>
+      <form id="register-form" class="auth-form">
+        <label>Full name
+          <input id="register-name" type="text" autocomplete="name" placeholder="Your name" minlength="2" required>
+        </label>
+        <label>Email address
+          <input id="register-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <label>Phone number
+          <input id="register-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national"
+            placeholder="Enter 10-digit phone number" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10"
+            aria-describedby="register-phone-help" title="Enter exactly 10 digits starting with 6, 7, 8, or 9."
+            required>
+          <small id="register-phone-help">Enter exactly 10 digits starting with 6, 7, 8, or 9.</small>
+        </label>
+        <label>Password
+          <input id="register-password" type="password" autocomplete="new-password" placeholder="At least 6 characters"
+            minlength="6" required>
+        </label>
+        <label>Confirm password
+          <input id="register-confirm-password" type="password" autocomplete="new-password"
+            placeholder="Enter password again" minlength="6" required>
+        </label>
+        <button class="primary-button" type="submit">Create account</button>
+      </form>
+      <p class="form-message" id="register-message" aria-live="polite"></p>
+      <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-about">
+        <a href="index.html" class="footer-brand">AgroEstimate</a>
+        <p>Simple tools for better farm planning. Estimate fertilizer costs, seed requirements, spacing and crop yield
+          in English or Marathi.</p>
+      </div>
+      <div class="footer-links">
+        <h2>Explore</h2>
+        <a href="login.html?next=fertilizer.html">Fertilizer &amp; cost</a>
+        <a href="login.html?next=seed.html">Seed rate &amp; spacing</a>
+        <a href="login.html?next=yield.html">Yield estimation</a>
+      </div>
+      <div class="footer-contact">
+        <h2>Contact us</h2>
+        <address><a href="mailto:ananyaaol07@gmail.com">ananyaaol07@gmail.com</a><a href="tel:+918446438711">+91
+            8446438711</a><span>Shirpur</span></address>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>AgroEstimate</span><span>A clearer plan for every acre.</span></div>
+  </footer>
+  <script src="login-environment.js"></script>
+  <script type="module" src="auth.js?v=phone-history-2"></script>
+
+  <script src="interior.js?v=4" defer></script>
+</body>
+
+</html>

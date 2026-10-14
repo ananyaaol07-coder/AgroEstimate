@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {resolvePhoneRequest} from '../phone-requests.js';
+let request={uid:'member',currentPhone:'9876543210',newPhone:'6123456789',status:'pending'},profile={phone:'9876543210'},writes=[];
+const api={doc:(_db,collection,uid)=>`${collection}/${uid}`,runTransaction:async(_db,fn)=>{const pending=[];await fn({get:async ref=>({exists:()=>true,data:()=>ref==='request'?request:profile}),update:(ref,data)=>pending.push([ref,data])});writes.push(...pending);}};
+await resolvePhoneRequest({api,db:{}},'request',true);
+assert.deepEqual(writes,[['users/member',{phone:'6123456789'}],['request',{status:'completed'}]]);
+writes=[];await resolvePhoneRequest({api,db:{}},'request',false);assert.deepEqual(writes,[['request',{status:'rejected'}]]);
+writes=[];profile.phone='7123456789';await assert.rejects(resolvePhoneRequest({api,db:{}},'request',true),/has changed/);assert.equal(writes.length,0);
+request.status='completed';await assert.rejects(resolvePhoneRequest({api,db:{}},'request',true),/no longer pending/);assert.equal(writes.length,0);
+console.log('Phone requests: approval updates phone and status atomically; rejection preserves profile; stale and completed requests blocked.');

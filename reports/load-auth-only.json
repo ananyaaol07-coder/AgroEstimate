@@ -1,0 +1,55 @@
+{
+  "mode": "auth-only",
+  "startedAt": "2026-10-14T08:19:16.805Z",
+  "stages": [
+    {
+      "concurrency": 10,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 0.17,
+      "journeysPerSecond": 583.61,
+      "p50ms": 12,
+      "p95ms": 44,
+      "maxMs": 51,
+      "errors": []
+    },
+    {
+      "concurrency": 25,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 0.09,
+      "journeysPerSecond": 1072.33,
+      "p50ms": 19,
+      "p95ms": 41,
+      "maxMs": 56,
+      "errors": []
+    },
+    {
+      "concurrency": 50,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 0.08,
+      "journeysPerSecond": 1201.96,
+      "p50ms": 25,
+      "p95ms": 81,
+      "maxMs": 83,
+      "errors": []
+    },
+    {
+      "concurrency": 100,
+      "attempts": 100,
+      "passed": 100,
+      "failed": 0,
+      "seconds": 0.09,
+      "journeysPerSecond": 1160.46,
+      "p50ms": 61,
+      "p95ms": 80,
+      "maxMs": 85,
+      "errors": []
+    }
+  ],
+  "finishedAt": "2026-10-14T08:19:17.354Z"
+}

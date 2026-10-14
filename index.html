@@ -3,55 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AgriEstimate helps farmers calculate fertilizer, seed requirements, spacing and estimated yield.">
-  <title>AgriEstimate | Farming Calculator</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="AgroEstimate helps farmers calculate fertilizer, seed requirements, spacing and estimated yield.">
+  <title>AgroEstimate | Farming Calculator</title>
+  <link rel="stylesheet" href="style.css?v=verification-popup-3">
+  <link rel="stylesheet" href="landing.css?v=farmer-gallery-6">
+<link rel="stylesheet" href="i18n.css?v=arrow-2">
+<script type="module" src="i18n.js?v=email-verification-1"></script>
+
+<script src="online-only.js?v=1" defer></script>
+<link rel="stylesheet" href="page-motion.css?v=3">
+<link rel="stylesheet" href="site-footer.css?v=2">
+<link rel="stylesheet" href="header-layout.css?v=1">
+<link rel="stylesheet" href="email-verification.css?v=3">
 </head>
-<body>
-  <header class="hero">
-    <nav class="container">
-      <a class="brand" href="index.html">🌱 AgriEstimate</a>
+<body class="landing-page">
+  <a class="skip-link" href="#welcome">Skip to content</a>
+  <div class="landing-shell">
+    <img class="hero-background" src="assets/farmland-hero.png" alt="" width="1536" height="1024" fetchpriority="high">
+    <header>
+    <nav class="landing-nav" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="AgroEstimate home"><img class="brand-logo" src="assets/agroestimate-logo-white-green.png" alt="AgroEstimate" width="2173" height="724"></a>
+      <div class="account-links" id="account-links">
+        <a href="login.html">Login</a>
+        <a class="register-link" href="register.html">Create account</a>
+      </div>
     </nav>
-    <div class="hero-content container">
-      <p class="eyebrow">A simple farming assistant</p>
-      <h1>Plan better. Grow smarter.</h1>
-      <p>Calculate fertilizer requirements, seed rate and spacing, and estimate crop yield.</p>
-      <a class="primary-button" href="#calculators">Choose a calculator</a>
+    </header>
+    <main class="landing-main" id="welcome">
+      <section class="landing-intro" aria-labelledby="landing-title">
+        <p class="landing-eyebrow"><span aria-hidden="true"></span> YOUR LAND. MORE POSSIBILITIES.</p>
+        <h1 id="landing-title">Small decisions.<br><span>Better harvests.</span></h1>
+        <p class="landing-description">A clearer plan for every acre.<br>Calculate what your crops need, from sowing to harvest.</p>
+        <a class="landing-cta" href="login.html?next=calculators.html">Plan my farm</a>
+        <p class="login-note">Three simple calculators. One place to begin.</p>
+      </section>
+      <section class="farmer-gallery" aria-label="Farmers at work">
+        <div class="farmer-gallery-window">
+          <div class="farmer-row"><div class="farmer-track">
+            <div class="farmer-group">
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/20317197.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/29912210.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/31983759.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/29039798.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+            </div>
+            <div class="farmer-group" aria-hidden="true">
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/20317197.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/29912210.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/31983759.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/29039798.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+            </div>
+          </div></div>
+          <div class="farmer-row"><div class="farmer-track">
+            <div class="farmer-group">
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/20841298.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/20344348.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/20445209.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false"><img class="farmer-photo" src="assets/farmers/16663119.jpg" alt="Farmers at work" width="640" height="400" decoding="async" draggable="false"></button>
+            </div>
+            <div class="farmer-group" aria-hidden="true">
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/20841298.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/20344348.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/20445209.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+              <button class="farmer-card" type="button" aria-label="Pause or resume photos" aria-pressed="false" tabindex="-1"><img class="farmer-photo" src="assets/farmers/16663119.jpg" alt="" width="640" height="400" decoding="async" draggable="false"></button>
+            </div>
+          </div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-about">
+        <a href="index.html" class="footer-brand">AgroEstimate</a>
+        <p>Simple tools for better farm planning. Estimate fertilizer costs, seed requirements, spacing and crop yield in English or Marathi.</p>
+      </div>
+      <div class="footer-links">
+        <h2>Explore</h2>
+        <a href="login.html?next=fertilizer.html">Fertilizer &amp; cost</a>
+        <a href="login.html?next=seed.html">Seed rate &amp; spacing</a>
+        <a href="login.html?next=yield.html">Yield estimation</a>
+      </div>
+      <div class="footer-contact">
+        <h2>Contact us</h2>
+        <address><a href="mailto:ananyaaol07@gmail.com">ananyaaol07@gmail.com</a><a href="tel:+918446438711">+91 8446438711</a><span>Shirpur</span></address>
+      </div>
     </div>
-  </header>
+    <div class="footer-bottom"><span>AgroEstimate</span><span>A clearer plan for every acre.</span></div>
+  </footer>
 
-  <main class="container" id="calculators">
-    <section class="intro">
-      <h2>Choose a calculator</h2>
-      <p>Select the service you need to continue to its calculation page.</p>
-    </section>
-
-    <section class="choice-grid" aria-label="Agricultural calculators">
-      <a class="choice-card" href="fertilizer.html">
-        <span class="choice-icon">🧪</span>
-        <h2>Fertilizer</h2>
-        <p>Calculate Urea, SSP and MOP requirements from the recommended NPK dose.</p>
-        <span class="card-link">Open calculator →</span>
-      </a>
-
-      <a class="choice-card" href="seed.html">
-        <span class="choice-icon">🌾</span>
-        <h2>Seed rate & spacing</h2>
-        <p>Find seed quantity, row spacing, plant spacing and expected population.</p>
-        <span class="card-link">Open calculator →</span>
-      </a>
-
-      <a class="choice-card" href="yield.html">
-        <span class="choice-icon">📈</span>
-        <h2>Yield estimation</h2>
-        <p>Estimate maize yield using spacing, crop population and cob information.</p>
-        <span class="card-link">Open calculator →</span>
-      </a>
-    </section>
-
-    <p class="disclaimer">Educational prototype: crop recommendations vary by variety, soil test, season, location and local agricultural guidelines.</p>
-  </main>
-
-  <footer><p>AgriEstimate · Smart calculations for better farming</p></footer>
+  <script type="module" src="farmer-gallery.js?v=3"></script>
+  <script type="module" src="auth.js?v=phone-history-2"></script>
 </body>
 </html>

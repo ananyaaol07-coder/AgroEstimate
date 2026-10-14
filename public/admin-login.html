@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sign in to AgroEstimate.">
+  <title>Admin Login | AgroEstimate</title>
+  <link rel="stylesheet" href="style.css?v=verification-popup-3">
+<link rel="stylesheet" href="interior.css?v=34">
+<link rel="stylesheet" href="i18n.css?v=arrow-2">
+<link rel="stylesheet" href="login-motion.css?v=4">
+<script type="module" src="i18n.js?v=email-verification-1"></script>
+
+<script src="online-only.js?v=1" defer></script>
+<link rel="stylesheet" href="page-motion.css?v=3">
+<link rel="stylesheet" href="auth-background.css?v=1">
+<link rel="stylesheet" href="header-layout.css?v=1">
+<link rel="stylesheet" href="email-verification.css?v=3">
+</head>
+<body data-login-role="admin">
+  <header class="page-header">
+    <nav class="container">
+      <a class="brand" href="index.html" aria-label="AgroEstimate home"><img class="brand-logo" src="assets/agroestimate-logo-white-green.png" alt="AgroEstimate" width="2173" height="724"></a>
+      <a class="nav-link" href="login.html">Back</a>
+    </nav>
+  </header>
+
+  <main class="auth-page container">
+    <section class="auth-card">
+      <span class="auth-icon">🛡️</span>
+      <p class="eyebrow auth-eyebrow">Administrator access</p>
+      <h1>Admin login</h1>
+      <p class="auth-copy">Enter your administrator credentials to open the dashboard.</p>
+      <form id="login-form" class="auth-form">
+        <label>Username
+          <input id="login-username" type="text" autocomplete="username" value="Admin" required>
+        </label>
+        <label>Password
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+        </label>
+        <button class="primary-button" type="submit">Login as admin</button>
+      </form>
+      <p class="form-message" id="login-message" aria-live="polite"></p>
+      <p class="auth-switch"><a href="login.html">Back to login</a></p>
+
+    </section>
+  </main>
+  <footer><p>AgroEstimate · Smart calculations for better farming</p></footer>
+  <script src="login-environment.js"></script>
+  <script type="module" src="auth.js?v=phone-history-2"></script>
+<script src="interior.js?v=4" defer></script>
+</body>
+</html>

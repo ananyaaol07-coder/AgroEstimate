@@ -1,0 +1,24 @@
+/* Match the landing-page farmland and overlay on account access pages. */
+body {
+  background-color:#112b21;
+  background-image:
+    linear-gradient(180deg,rgba(208,218,185,.65) 0,rgba(208,218,185,.28) 120px,transparent 290px),
+    linear-gradient(90deg,rgba(6,28,20,.66),rgba(7,27,20,.35) 58%,rgba(6,26,19,.12)),
+    linear-gradient(0deg,#0a231cd4,transparent 70%),
+    url('assets/farmland-hero.png');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+.page-header::before { background:none; }
+body > footer:not(.site-footer) { color:#e1e8dd; }
+@media(max-width:600px) {
+  body {
+    background-image:
+      linear-gradient(180deg,rgba(208,218,185,.65),rgba(208,218,185,.25) 150px,transparent 310px),
+      linear-gradient(90deg,#0b241db8,#102b2059),
+      linear-gradient(0deg,#0b241dde,transparent),
+      url('assets/farmland-hero.png');
+    background-position:62% center;
+  }
+}

@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {historyCutoff,shiftMonths} from '../history-retention.js';
+const date=(year,month,day)=>new Date(year,month-1,day,12);
+assert.equal(shiftMonths(date(2026,5,31),-3).getTime(),date(2026,2,28).getTime());
+assert.equal(shiftMonths(date(2024,2,29),12).getTime(),date(2025,2,28).getTime());
+assert.equal(historyCutoff('365',date(2026,10,6)).getTime(),date(2026,7,6).getTime());
+assert.equal(historyCutoff('all',date(2026,10,6)).getTime(),date(2026,7,6).getTime());
+assert.equal(historyCutoff('365',date(2026,10,6),12).getTime(),date(2025,10,6).getTime());
+assert.equal(historyCutoff('180',date(2026,10,6),12).getTime(),date(2026,4,6).getTime());
+assert.equal(historyCutoff('7',date(2026,10,6)).getTime(),date(2026,9,29).getTime());
