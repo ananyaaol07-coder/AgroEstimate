@@ -218,7 +218,7 @@ async function start() {
         setupAdminCrops({api, db, auth});
         const list = document.getElementById('user-list');
         if (list || document.getElementById('admin-analytics')) {
-          const result = await api.getDocs(api.collection(db, 'users'));
+          const result = list ? await api.getDocsFromServer(api.collection(db, 'users')) : null;
           if (auth.currentUser?.uid !== user.uid) return;
           if (list) {
             const {renderUsers} = await import('./admin-users.js?v=save-fix-2');
@@ -226,8 +226,8 @@ async function start() {
             renderUsers({api, db, auth, entries: result.docs, emailEditingEnabled: adminEmailEditingEnabled, updateAccount: functions.httpsCallable(functions.getFunctions(firebase), 'adminUpdateUser', {timeout:15000})});
           }
           if (document.getElementById('admin-analytics')) {
-            const {setupAnalytics} = await import('./analytics.js?v=history-free-8');
-            setupAnalytics({api,db,auth}, result.docs.map(entry=>entry.data()));
+            const {setupAnalytics} = await import('./analytics.js?v=live-profiles-1');
+            setupAnalytics({api,db,auth});
           }
         }
         if(document.getElementById('email-requests')) {

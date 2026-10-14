@@ -44,7 +44,7 @@ function bars(target, entries, showZeroValues = false) {
     row.append(name,track,number); target.append(row);
   }
 }
-export function setupAnalytics({api,db,auth}, profiles) {
+export function setupAnalytics({api,db,auth}) {
   const root=document.getElementById('admin-analytics');
   if (!root || root.dataset.ready) return;
   root.dataset.ready='true';
@@ -55,16 +55,50 @@ export function setupAnalytics({api,db,auth}, profiles) {
   const currentUid=auth.currentUser?.uid;
   let request=0;
   const set=(id,value)=>{document.getElementById(id).textContent=format(value);};
-  set('metric-users',profiles.length);
-  // Registration dates are profile creation dates, which are available for existing accounts.
-  const registrationStart = new Date(2026,9,1);
-  const now = new Date();
-  const monthCount = Math.max(1,(now.getFullYear()-2026)*12+now.getMonth()-9+1);
-  const months=Array.from({length:monthCount},(_,i)=>new Date(registrationStart.getFullYear(),registrationStart.getMonth()+i,1));
-  bars(document.getElementById('registration-chart'),months.map((date,i)=>[
-    date.toLocaleDateString('en-IN',{month:'short',year:'2-digit'}),
-    profiles.filter(profile=>{const time=profile.createdAt?.toDate?.(); return time && time>=date && time<(months[i+1] || new Date(date.getFullYear(),date.getMonth()+1,1));}).length
-  ]), true);
+  function renderProfiles(profiles) {
+    set('metric-users',profiles.length);
+    // Registration dates are profile creation dates, which are available for existing accounts.
+    const registrationStart = new Date(2026,9,1);
+    const now = new Date();
+    const monthCount = Math.max(1,(now.getFullYear()-2026)*12+now.getMonth()-9+1);
+    const months=Array.from({length:monthCount},(_,i)=>new Date(registrationStart.getFullYear(),registrationStart.getMonth()+i,1));
+    bars(document.getElementById('registration-chart'),months.map((date,i)=>[
+      date.toLocaleDateString('en-IN',{month:'short',year:'2-digit'}),
+      profiles.filter(profile=>{const time=profile.createdAt?.toDate?.(); return time && time>=date && time<(months[i+1] || new Date(date.getFullYear(),date.getMonth()+1,1));}).length
+    ]), true);
+  }
+  const profileStatus=document.getElementById('profile-status');
+  let stopProfiles;
+  function watchProfiles() {
+    stopProfiles?.();
+    set('metric-users',null);
+    document.getElementById('registration-chart').replaceChildren();
+    profileStatus.textContent='Loading current profiles…';
+    stopProfiles=api.onSnapshot(api.collection(db,'users'),{includeMetadataChanges:true},snapshot=>{
+      if(auth.currentUser?.uid!==currentUid || !window.agriAuthenticated) return;
+      if(snapshot.metadata.fromCache) {
+        set('metric-users',null);
+        document.getElementById('registration-chart').replaceChildren();
+        profileStatus.textContent='Waiting for current profiles from Firebase…';
+        return;
+      }
+      renderProfiles(snapshot.docs.map(entry=>entry.data()));
+      profileStatus.textContent='';
+    },()=>{
+      set('metric-users',null);
+      document.getElementById('registration-chart').replaceChildren();
+      profileStatus.textContent='Could not load current profiles. Check your connection and click Refresh.';
+    });
+  }
+  watchProfiles();
+  const stopAuth=api.onAuthStateChanged(auth,user=>{
+    if(user?.uid!==currentUid) {
+      stopProfiles?.();
+      set('metric-users',null);
+      document.getElementById('registration-chart').replaceChildren();
+    }
+  });
+  window.addEventListener('pagehide',()=>{stopProfiles?.();stopAuth();},{once:true});
   async function load() {
     const version=++request;
     refresh.disabled=true; status.textContent='Loading calculation activity…';
@@ -108,5 +142,5 @@ export function setupAnalytics({api,db,auth}, profiles) {
       status.textContent=messages[error.code] || `Could not load calculation activity: ${error.message || error.code || 'Unknown error'}`;
     } finally {if(version===request) refresh.disabled=false;}
   }
-  period.addEventListener('change',load); refresh.addEventListener('click',load); load();
+  period.addEventListener('change',load); refresh.addEventListener('click',()=>{watchProfiles();load();}); load();
 }
